@@ -22,9 +22,9 @@ jobs:
           echo "{{ vars.KEY_PUB }}" >> ${{ github.job }}
           echo "{{ secrets.KEY_PRIVATE }}" > private_key
           chmod 600 private_key
-      - name: Copy authorized_keys to server
-        run: |
-          scp -P ${{ env.PORT }} -i ./private_key ${{ github.job }} ${{ env.USER }}@${{ env.HOST }}:.ssh/authorized_keys
+      # - name: Copy authorized_keys to server
+      #   run: |
+      #     scp -P ${{ env.PORT }} -i ./private_key ${{ github.job }} ${{ env.USER }}@${{ env.HOST }}:.ssh/authorized_keys
       - name: Restart sshd
         run: |
           ssh -p ${{ env.PORT }} -i ./private_key ${{ env.USER }}@${{ env.HOST }} 'chmod 600 ~/.ssh/authorized_keys && sudo systemctl restart sshd'
