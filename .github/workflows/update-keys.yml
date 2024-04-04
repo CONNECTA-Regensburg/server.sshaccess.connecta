@@ -17,39 +17,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Add root key
+      - name: Add authorized_keys to {{ github.job }}
         run: |
           echo "{{ vars.KEY_PUB }}" >> ${{ github.job }}
-          cp ${{ github.job }} authorized_keys
-      # - name: Upload to server
-      #   uses: garygrossgarten/github-action-scp@release
-      #   with:
-      #     host: ${{ env.HOST }}
-      #     port: ${{ env.PORT }}
-      #     username: ${{ env.USER }}
-      #     privateKey: ${{ secrets.KEY_PRIVATE }}
-      #     local: ${{ github.job }}
-      #     remote: ~/authorized_keys
-      - name: Upload authorized_keys to server
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ env.HOST }}
-          port: ${{ env.PORT }}
-          username: ${{ env.USER }}
-          key: ${{ secrets.KEY_PRIVATE }}
-          source: authorized_keys
-          target: ~/.ssh
-          overwrite: true
-      - name: Change permissions and restart
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ env.HOST }}
-          port: ${{ env.PORT }}
-          username: ${{ env.USER }}
-          key: ${{ secrets.KEY_PRIVATE }}
-          script: |
-            sudo chmod 600 ~/.ssh/authorized_keys
-            sudo systemctl restart sshd
-            cat ~/.ssh/authorized_keys
-            ls ~
-            ls ~/.ssh
+          echo "{{ secrets.KEY_PRIVATE }}" > private_key
+          chmod 600 private_key
+          scp -P ${{ env.PORT }} -i private_key ${{ github.job }} ${{ env.USER }}@${{ env.HOST }}:.ssh/authorized_keys
+          ssh -p ${{ env.PORT }} -i private_key ${{ env.USER }}@${{ env.HOST }} 'chmod 600 ~/.ssh/authorized_keys && sudo systemctl restart sshd'
+        continue-on-error: true
+      - name: Remove private_key
+        run: rm private_key
