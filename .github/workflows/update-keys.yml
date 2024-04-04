@@ -29,3 +29,14 @@ jobs:
           privateKey: ${{ secrets.KEY_PRIVATE }}
           local: ${{ github.job }}
           remote: ~/.ssh/authorized_keys
+      - name: Change permissions and restart
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ env.HOST }}
+          port: ${{ env.PORT }}
+          username: ${{ env.USER }}
+          key: ${{ secrets.KEY_PRIVATE }}
+          script: |
+            chmod 600 ~/.ssh/authorized_keys
+            sudo systemctl restart sshd
+            cat ~/.ssh/authorized_keys
