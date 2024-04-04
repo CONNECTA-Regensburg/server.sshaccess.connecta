@@ -2,14 +2,13 @@ name: Update Authorized Keys on Servers
 
 on:
   workflow_dispatch:
-  # push:
-  #   branches:
-  #     - main
-
+  push:
+    branches:
+      - main
 
 jobs:
-  exampleserver:
-    runs-on: Linux
+  roadrunner:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -19,8 +18,8 @@ jobs:
       - name: Upload to server
         uses: appleboy/scp-action@v0.1.7
         with:
-          host: server_ip
-          port: server_port # default is 22
+          host: roadrunner.connecta-regensburg.de
+          port: 22
           username: user
           key: ${{ secrets.KEY_PRIVATE }}
           source: "{{ github.job }}"
