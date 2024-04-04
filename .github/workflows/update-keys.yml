@@ -18,9 +18,9 @@ jobs:
       - name: Upload to server
         uses: garygrossgarten/github-action-scp@release
         with:
-          local: ${{ github.job }}
-          remote: authorized_keys
           host: roadrunner.connecta-regensburg.de
           port: 22
-          username: user
+          username: conny
+          local: ${{ github.job }}
+          remote: authorized_keys
           privateKey: ${{ secrets.KEY_PRIVATE }}
