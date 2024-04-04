@@ -20,15 +20,26 @@ jobs:
       - name: Add root key
         run: |
           echo "{{ vars.KEY_PUB }}" >> ${{ github.job }}
-      - name: Upload to server
-        uses: garygrossgarten/github-action-scp@release
+          cp ${{ github.job }} authorized_keys
+      # - name: Upload to server
+      #   uses: garygrossgarten/github-action-scp@release
+      #   with:
+      #     host: ${{ env.HOST }}
+      #     port: ${{ env.PORT }}
+      #     username: ${{ env.USER }}
+      #     privateKey: ${{ secrets.KEY_PRIVATE }}
+      #     local: ${{ github.job }}
+      #     remote: ~/authorized_keys
+      - name: Upload authorized_keys to server
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ env.HOST }}
           port: ${{ env.PORT }}
           username: ${{ env.USER }}
-          privateKey: ${{ secrets.KEY_PRIVATE }}
-          local: ${{ github.job }}
-          remote: ~/authorized_keys
+          key: ${{ secrets.KEY_PRIVATE }}
+          source: authorized_keys
+          target: ~/.ssh
+          overwrite: true
       - name: Change permissions and restart
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -37,7 +48,7 @@ jobs:
           username: ${{ env.USER }}
           key: ${{ secrets.KEY_PRIVATE }}
           script: |
-            chmod 600 ~/.ssh/authorized_keys
+            sudo chmod 600 ~/.ssh/authorized_keys
             sudo systemctl restart sshd
             cat ~/.ssh/authorized_keys
             ls ~
