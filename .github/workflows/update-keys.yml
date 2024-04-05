@@ -44,6 +44,6 @@ jobs:
         run: |
           ssh {{ env.HOST }} 'chmod 600 ~/.ssh/authorized_keys && sudo systemctl restart sshd'
 
-      - name: Remove private_key
+      - name: Remove .ssh config
         if: always()
-        run: rm -rf ~/.ssh
+        run: rm -rf ~/.ssh || sudo rm -rf ~/.ssh
