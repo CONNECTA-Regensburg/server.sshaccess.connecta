@@ -27,6 +27,7 @@ jobs:
           touch ~/.ssh/known_hosts
           echo "${{ secrets.KEY_PRIVATE }}" > ~/.ssh/private_key
           sudo chmod -R 600 ~/.ssh
+          sudo chmod 700 ~/.ssh
           ssh-keyscan -t ssh-ed25519 ${{ env.HOST }} >> ~/.ssh/known_hosts
 
       - name: Debug print files
