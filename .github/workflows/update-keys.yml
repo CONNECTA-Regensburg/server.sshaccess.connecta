@@ -23,6 +23,7 @@ jobs:
           echo "{{ vars.KEY_PUB }}" >> ${{ env.FILE }}
           echo "{{ secrets.KEY_PRIVATE }}" > private_key
           sudo chmod 600 private_key
+          mkdir -p ~/.ssh
           ssh-keyscan -t ssh-ed25519 -p ${{ env.PORT }} ${{ env.HOST }} >> ~/.ssh/known_hosts
       - name: Copy authorized_keys to server
         run: |
