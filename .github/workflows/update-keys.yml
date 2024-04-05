@@ -9,10 +9,7 @@ on:
 jobs:
   roadrunner:
     env:
-      HOST: roadrunner.connecta-regensburg.de
-      PORT: 22
-      USER: conny
-      FILE: ${{ github.job }}
+      HOST: ${{ github.job }}
 
     runs-on: ubuntu-latest
     steps:
@@ -20,11 +17,24 @@ jobs:
         uses: actions/checkout@v4
       - name: generate authorized_keys
         run: |
-          echo "{{ vars.KEY_PUB }}" >> ${{ env.FILE }}
-          echo "{{ secrets.KEY_PRIVATE }}" > private_key
-          sudo chmod 600 private_key
+          echo "{{ vars.KEY_PUB }}" >> ${{ env.HOST }}
+          cat ${{ env.HOST }}
+      - name: prepare ssh
+        run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -t ssh-ed25519 -p ${{ env.PORT }} ${{ env.HOST }} >> ~/.ssh/known_hosts
+          echo "IdentityFile ~/.ssh/private_key" > ~/.ssh/config
+          cat config >> ~/.ssh/config
+          ssh-keyscan -t ssh-ed25519 ${{ env.HOST }} >> ~/.ssh/known_hosts
+          echo "{{ secrets.KEY_PRIVATE }}" > ~/.ssh/private_key
+          sudo chmod -R 600 ~/.ssh
+
+      - name: Debug print files
+        run: |
+          ls -la ~/.ssh
+          cat ~/.ssh/config
+          cat ~/.ssh/known_hosts
+          cat ~/.ssh/private_key
+
       - name: Copy authorized_keys to server
         run: |
           scp -P ${{ env.PORT }} -i ./private_key ${{ env.FILE }} ${{ env.USER }}@${{ env.HOST }}:.ssh/authorized_keys
@@ -34,4 +44,4 @@ jobs:
 
       - name: Remove private_key
         if: always()
-        run: rm private_key
+        run: rm -rf ~/.ssh
