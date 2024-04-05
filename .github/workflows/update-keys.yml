@@ -10,8 +10,8 @@ on:
 jobs:
   update-keys:
     env:
-      HOST: ${{ github.event.inputs.HOST }}
-      FILE: authorized_keys.${{ github.event.inputs.HOST }}
+      HOST: ${{ inputs.HOST }}
+      FILE: authorized_keys.${{ inputs.HOST }}
 
     runs-on: ubuntu-latest
     steps:
