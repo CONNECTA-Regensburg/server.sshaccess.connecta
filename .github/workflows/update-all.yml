@@ -10,3 +10,5 @@ jobs:
     uses: ./.github/workflows/update-keys.yml
     with:
       HOST: roadrunner
+    secrets:
+      KEY_PRIVATE: ${{ secrets.KEY_PRIVATE }}

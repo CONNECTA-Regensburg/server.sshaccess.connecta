@@ -6,6 +6,9 @@ on:
       HOST:
         required: true
         type: string
+    secrets:
+      KEY_PRIVATE:
+        required: true
 
 jobs:
   update-keys:
