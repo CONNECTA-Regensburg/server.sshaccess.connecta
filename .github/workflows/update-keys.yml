@@ -19,7 +19,6 @@ jobs:
       - name: generate authorized_keys
         run: |
           echo "${{ vars.KEY_PUB }}" >> ${{ env.FILE }}
-          cat ${{ env.FILE }}
       - name: prepare ssh
         run: |
           mkdir -p ~/.ssh
@@ -29,13 +28,6 @@ jobs:
           echo "${{ secrets.KEY_PRIVATE }}" > ~/.ssh/private_key
           sudo chmod -R 600 ~/.ssh
           sudo chmod 700 ~/.ssh
-
-      - name: Debug print files
-        run: |
-          ls -la ~/.ssh
-          cat ~/.ssh/config
-          cat ~/.ssh/known_hosts
-          cat ~/.ssh/private_key
 
       - name: Copy authorized_keys to server
         run: |
