@@ -12,3 +12,11 @@ jobs:
       HOST: roadrunner
     secrets:
       KEY_PRIVATE: ${{ secrets.KEY_PRIVATE }}
+
+  speicherschnecke:
+    uses: ./.github/workflows/update-keys.yml
+    with:
+      HOST: speicherschnecke
+      RESTART_SSH: false
+    secrets:
+      KEY_PRIVATE: ${{ secrets.KEY_PRIVATE }}

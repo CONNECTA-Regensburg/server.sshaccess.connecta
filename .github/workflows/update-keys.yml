@@ -6,6 +6,10 @@ on:
       HOST:
         required: true
         type: string
+      RESTART_SSH:
+        required: false
+        type: boolean
+        default: true
     secrets:
       KEY_PRIVATE:
         required: true
@@ -34,10 +38,14 @@ jobs:
           sudo chmod 700 ~/.ssh
       - name: Copy authorized_keys to server
         run: |
-          scp  ${{ env.FILE }} ${{ env.HOST }}:~/.ssh/authorized_keys
-      - name: Restart sshd
+          scp  ${{ env.FILE }} ${{ env.HOST }}:.ssh/authorized_keys
+      - name: Adjust Rights
         run: |
-          ssh ${{ env.HOST }} 'chmod 600 ~/.ssh/authorized_keys && sudo systemctl restart sshd'
+          ssh ${{ env.HOST }} 'chmod 600 .ssh/authorized_keys'
+      - name: Restart SSH
+        if: inputs.RESTART_SSH
+        run: |
+          ssh ${{ env.HOST }} 'sudo systemctl restart sshd'
       - name: Remove .ssh config
         if: always()
         run: rm -rf ~/.ssh || sudo rm -rf ~/.ssh

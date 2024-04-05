@@ -1,3 +1,7 @@
 Host roadrunner
     HostName roadrunner.connecta-regensburg.de
     User conny
+
+Host speicherschnecke
+    HostName u355119.your-storagebox.de
+    User u355119-sub1
