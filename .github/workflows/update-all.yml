@@ -9,4 +9,4 @@ jobs:
   roadrunner:
     uses: ./.github/workflows/update-keys.yml
     with:
-      HOST: ${{ github.job }}
+      HOST: roadrunner
