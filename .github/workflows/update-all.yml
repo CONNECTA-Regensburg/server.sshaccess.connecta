@@ -1,0 +1,12 @@
+name: Update all keys
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  roadrunner:
+    uses: ./.github/workflows/update-keys.yml
+    with:
+      HOST: ${{ github.job }}

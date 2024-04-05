@@ -1,16 +1,17 @@
 name: Update Authorized Keys on Servers
 
 on:
-  workflow_dispatch:
-  push:
-    branches:
-      - main
+  workflow_call:
+    inputs:
+      HOST:
+        required: true
+        type: string
 
 jobs:
-  roadrunner:
+  update-keys:
     env:
-      HOST: ${{ github.job }}
-      FILE: authorized_keys.${{ github.job }}
+      HOST: ${{ inputs.HOST }}
+      FILE: authorized_keys.${{ inputs.HOST }}
 
     runs-on: ubuntu-latest
     steps:
@@ -28,14 +29,12 @@ jobs:
           echo "${{ secrets.KEY_PRIVATE }}" > ~/.ssh/private_key
           sudo chmod -R 600 ~/.ssh
           sudo chmod 700 ~/.ssh
-
       - name: Copy authorized_keys to server
         run: |
           scp  ${{ env.FILE }} ${{ env.HOST }}:~/.ssh/authorized_keys
       - name: Restart sshd
         run: |
           ssh ${{ env.HOST }} 'chmod 600 ~/.ssh/authorized_keys && sudo systemctl restart sshd'
-
       - name: Remove .ssh config
         if: always()
         run: rm -rf ~/.ssh || sudo rm -rf ~/.ssh
