@@ -10,6 +10,10 @@ on:
         required: false
         type: boolean
         default: true
+      RUNS_ON:
+        required: false
+        type: string
+        default: ubuntu-latest
     secrets:
       KEY_PRIVATE:
         required: true
@@ -20,7 +24,7 @@ jobs:
       HOST: ${{ inputs.HOST }}
       FILE: authorized_keys.${{ inputs.HOST }}
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.RUNS_ON }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
