@@ -6,6 +6,20 @@ on:
   workflow_dispatch:
 
 jobs:
+  eagle:
+    uses: ./.github/workflows/update-keys.yml
+    with:
+      HOST: eagle
+    secrets:
+      KEY_PRIVATE: ${{ secrets.KEY_PRIVATE }}
+
+  bugsbunny:
+    uses: ./.github/workflows/update-keys.yml
+    with:
+      HOST: bugsbunny
+    secrets:
+      KEY_PRIVATE: ${{ secrets.KEY_PRIVATE }}
+
   roadrunner:
     uses: ./.github/workflows/update-keys.yml
     with:
@@ -13,10 +27,10 @@ jobs:
     secrets:
       KEY_PRIVATE: ${{ secrets.KEY_PRIVATE }}
 
-  speicherschnecke:
+  speicherschnecke-connecta:
     uses: ./.github/workflows/update-keys.yml
     with:
-      HOST: speicherschnecke
+      HOST: speicherschnecke-connecta
       RESTART_SSH: false
     secrets:
       KEY_PRIVATE: ${{ secrets.KEY_PRIVATE }}

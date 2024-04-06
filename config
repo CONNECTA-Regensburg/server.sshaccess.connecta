@@ -1,8 +1,16 @@
+Host eagle
+    HostName eagle.connecta-regensburg.de
+    User root
+
+Host bugsbunny
+    HostName bugsbunny.connecta-regensburg.de
+    User conny
+
 Host roadrunner
     HostName roadrunner.connecta-regensburg.de
     User conny
 
-Host speicherschnecke
+Host speicherschnecke-connecta
     HostName u355119.your-storagebox.de
     User u355119-sub1
     Port 23
