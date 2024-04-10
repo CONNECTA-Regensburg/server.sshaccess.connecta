@@ -6,10 +6,11 @@ On a push to this repository, all authorized_keys files are updated on all serve
 
 ## Usage
 
-1. find the key you want to add (e.g. `~/.ssh/id_rsa.pub`)
+1. find the key you want to add (e.g. `~/.ssh/id_rsa.pub`)  
    Or create a new one: `ssh-keygen -t ed25519`
-2. add the key to the `servername-username` file in this repository (for the server you want to get access to)
-3. push the changes to this repository
+   Find your key using `type ~\.ssh\id_ed25519.pub` for windows, `cat ~/.ssh/id_rsa.pub` for linux
+3. add the key to the `servername-username` file in this repository (for the server you want to get access to)
+4. push the changes to this repository
 
 ## Add host
 
