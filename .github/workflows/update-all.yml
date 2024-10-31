@@ -27,6 +27,13 @@ jobs:
     secrets:
       KEY_PRIVATE: ${{ secrets.KEY_PRIVATE }}
 
+  mayfly:
+    uses: ./.github/workflows/update-keys.yml
+    with:
+      HOST: mayfly
+    secrets:
+      KEY_PRIVATE: ${{ secrets.KEY_PRIVATE }}
+
   speicherschnecke-connecta:
     uses: ./.github/workflows/update-keys.yml
     with:
