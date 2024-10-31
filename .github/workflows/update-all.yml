@@ -10,6 +10,7 @@ jobs:
     uses: ./.github/workflows/update-keys.yml
     with:
       HOST: eagle
+      RESTART_SSHD: true
     secrets:
       KEY_PRIVATE: ${{ secrets.KEY_PRIVATE }}
 
@@ -17,6 +18,7 @@ jobs:
     uses: ./.github/workflows/update-keys.yml
     with:
       HOST: bugsbunny
+      RESTART_SSHD: true
     secrets:
       KEY_PRIVATE: ${{ secrets.KEY_PRIVATE }}
 
@@ -24,6 +26,7 @@ jobs:
     uses: ./.github/workflows/update-keys.yml
     with:
       HOST: roadrunner
+      RESTART_SSHD: true
     secrets:
       KEY_PRIVATE: ${{ secrets.KEY_PRIVATE }}
 
@@ -31,6 +34,7 @@ jobs:
     uses: ./.github/workflows/update-keys.yml
     with:
       HOST: mayfly
+      RESTART_SSH: true
     secrets:
       KEY_PRIVATE: ${{ secrets.KEY_PRIVATE }}
 
@@ -38,6 +42,5 @@ jobs:
     uses: ./.github/workflows/update-keys.yml
     with:
       HOST: speicherschnecke-connecta
-      RESTART_SSH: false
     secrets:
       KEY_PRIVATE: ${{ secrets.KEY_PRIVATE }}
