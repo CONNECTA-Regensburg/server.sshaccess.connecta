@@ -13,3 +13,6 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDjMlmQrIGxjVhEpSRoygxf0fybygiDNCMeVFovRvPX
 
 # Jannis Meyer
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMaioVkI/qrwDK4aUsb+LcXJ5zL/9jcMokjQUfIcR7q9 jannis@otto
+
+# Anja Klosterhuber
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMbBkkj3i5Ed5qjzABz6Lzrs3mvcUOJcANaC8yp50Nr+ anja.klosterhuber@web.de
