@@ -38,6 +38,14 @@ jobs:
     secrets:
       KEY_PRIVATE: ${{ secrets.KEY_PRIVATE }}
 
+  falcon:
+    uses: ./.github/workflows/update-keys.yml
+    with:
+      HOST: falcon
+      RESTART_SSHD: true
+    secrets:
+      KEY_PRIVATE: ${{ secrets.KEY_PRIVATE }}
+
   speicherschnecke-connecta:
     uses: ./.github/workflows/update-keys.yml
     with:
